@@ -31,9 +31,6 @@ public class AnimeCover implements Serializable {
 	@Column(nullable = false)
 	private String urlCoverNivel4;
 	
-	@Column(nullable = false)
-	private Integer timesPlayed = 0;
-	
 	//Construtores
 	public AnimeCover() {
 		
@@ -89,11 +86,4 @@ public class AnimeCover implements Serializable {
 		this.urlCoverNivel4 = urlCoverNivel4;
 	}
 
-	public Integer getTimesPlayed() {
-		return timesPlayed;
-	}
-	public void setTimesPlayed(Integer timesPlayed) {
-		this.timesPlayed = timesPlayed;
-	}
-	
 }
