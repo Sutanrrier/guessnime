@@ -17,7 +17,7 @@ function AnimeCover() {
     <>
       <img
         className="img-fluid mx-auto d-block guessnime-animecover"
-        src={cover.urlCoverNivel0}
+        src={cover.url0}
         alt="anime-cover"
       />
     </>

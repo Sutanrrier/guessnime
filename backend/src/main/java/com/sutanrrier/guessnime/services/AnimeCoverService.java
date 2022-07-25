@@ -23,6 +23,10 @@ public class AnimeCoverService {
 		return coverRepository.findById(id).get();
 	}
 	
+	public List<AnimeCover> getAnimeCoverByTitle(String title) {	
+		return coverRepository.findByTitle(title);
+	}
+	
 	public AnimeCover insertAnimeCover(AnimeCover animeCover) {
 		return coverRepository.save(animeCover);
 	}

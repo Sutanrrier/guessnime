@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sutanrrier.guessnime.entities.AnimeCover;
@@ -30,6 +31,11 @@ public class AnimeCoverController {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<AnimeCover> getAnimeCoverById(@PathVariable Long id){
 		return ResponseEntity.status(HttpStatus.OK).body(coverService.getAnimeCoverById(id));
+	}
+	
+	@GetMapping(value = "/guess")
+	public ResponseEntity<List<AnimeCover>> getAnimeTitle(@RequestParam String title){
+		return ResponseEntity.status(HttpStatus.OK).body(coverService.getAnimeCoverByTitle(title));
 	}
 	
 	@PostMapping
