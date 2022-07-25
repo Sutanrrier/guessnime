@@ -1,0 +1,16 @@
+.guessanime-guess-button {
+    font-weight: bold;
+}
+
+.guessnime-guess-input {
+    border-radius: 0.5rem;
+    height: 2.6rem;
+    width: 20rem;
+    margin-right: 0.3rem;
+}
+
+.guessnime-guess-form {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
