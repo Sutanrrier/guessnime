@@ -1,4 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import AnimeCover from "./components/AnimeCover/AnimeCover";
+import GuessInput from "./components/GuessInput/GuessInput";
 import GuessAnimeNavbar from "./components/Navbar/Navbar";
 
 function App() {
@@ -7,8 +9,9 @@ function App() {
       <div className="guessnime-navbar">
         <GuessAnimeNavbar />
       </div>
-      <div className="guessnime-content">
-        <h1>Teste</h1>
+      <div className="container">
+        <AnimeCover />
+        <GuessInput />
       </div>
     </>
   );

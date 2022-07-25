@@ -9,7 +9,7 @@ function GuessAnimeNavbar() {
         <Container>
           <Navbar.Brand href="#home">
             <img
-              alt=""
+              alt="logo"
               src={logo}
               width="30"
               height="30"
