@@ -1,8 +1,16 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import GuessAnimeNavbar from "./components/Navbar/Navbar";
+
 function App() {
   return (
-    <div>
-      <h1>Teste</h1>
-    </div>
+    <>
+      <div className="guessnime-navbar">
+        <GuessAnimeNavbar />
+      </div>
+      <div className="guessnime-content">
+        <h1>Teste</h1>
+      </div>
+    </>
   );
 }
 
