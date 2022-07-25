@@ -14,3 +14,24 @@
     justify-content: center;
     margin: auto;
 }
+
+.guessnime-anime-list {
+    padding: 0;
+    background-color: #555;
+    margin: 1rem auto 0.2rem auto;
+    width: 25rem;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.guessnime-anime-list-item {
+    padding: 0.4rem;
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+}
+
+.guessnime-anime-list-item:hover {
+    cursor: pointer;
+    background-color: #999;
+}
