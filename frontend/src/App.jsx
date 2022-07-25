@@ -6,10 +6,8 @@ import Navbar from "./components/Navbar/Navbar";
 function App() {
   return (
     <>
-      <div className="guessnime-navbar">
-        <Navbar />
-      </div>
-      <div className="container-fluid">
+      <Navbar />
+      <div className="container">
         <AnimeCover />
         <GuessInput />
         <LifeHUD />
