@@ -1,26 +1,15 @@
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import logo from "../../assets/guessnime-logo.svg";
+import "./Navbar.css";
 
-function GuessAnimeNavbar() {
+function Navbar() {
   return (
-    <>
-      <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand href="#home">
-            <img
-              alt="logo"
-              src={logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />{" "}
-            GUESSNIME
-          </Navbar.Brand>
-        </Container>
-      </Navbar>
-    </>
+    <nav className="navbar bg-dark">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="#">
+          <span className="navbar-text guessnime-navbar-title">GUESSNIME</span>
+        </a>
+      </div>
+    </nav>
   );
 }
 
-export default GuessAnimeNavbar;
+export default Navbar;
