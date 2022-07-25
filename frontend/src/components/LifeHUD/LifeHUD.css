@@ -1,0 +1,12 @@
+.guessnime-lifes-image {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 1rem auto 0 auto;
+}
+
+.guessnime-life-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
