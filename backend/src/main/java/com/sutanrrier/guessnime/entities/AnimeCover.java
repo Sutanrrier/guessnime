@@ -18,17 +18,11 @@ public class AnimeCover implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
 	private String urlCover;
-	@Column(nullable = false)
 	private String urlCoverNivel0;
-	@Column(nullable = false)
 	private String urlCoverNivel1;
-	@Column(nullable = false)
 	private String urlCoverNivel2;
-	@Column(nullable = false)
 	private String urlCoverNivel3;
-	@Column(nullable = false)
 	private String urlCoverNivel4;
 	
 	//Construtores
