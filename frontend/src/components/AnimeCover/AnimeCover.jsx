@@ -1,16 +1,18 @@
-import { useState } from "react";
 import { useEffect } from "react";
+import { activeAnime } from "../../slices/animeCoverSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./AnimeCover.css";
 
 function AnimeCover() {
-  const [cover, setCover] = useState([]);
+  const cover = useSelector((state) => state.animeCover);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const url_api = "http://localhost:8080/anime-covers/1";
     fetch(url_api)
       .then((response) => response.json())
-      .then((data) => setCover(data));
+      .then((data) => dispatch(activeAnime(data)));
   }, []);
 
   return (
