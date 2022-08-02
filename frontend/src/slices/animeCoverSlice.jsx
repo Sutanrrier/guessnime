@@ -23,16 +23,9 @@ export const animeCoverSlice = createSlice({
       state.url3 = action.payload.url3;
       state.url4 = action.payload.url4;
     },
-    guessAnime: (state, action) => {
-      if (state.title == action.payload) {
-        console.log("Acertou!");
-      } else {
-        console.log("Errou!");
-      }
-    },
   },
 });
 
-export const { activeAnime, guessAnime } = animeCoverSlice.actions;
+export const { activeAnime } = animeCoverSlice.actions;
 
 export default animeCoverSlice.reducer;

@@ -2,3 +2,7 @@
     width: 1.5rem;
     margin: 0.2rem 0.2rem;
 }
+
+.fill-black {
+    filter: invert(7%) sepia(2%) saturate(7%) hue-rotate(314deg) brightness(100%) contrast(101%);
+}
