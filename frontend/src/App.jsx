@@ -1,5 +1,4 @@
-import AnimeCover from "./components/AnimeCover/AnimeCover";
-import GuessInput from "./components/GuessInput/GuessInput";
+import Game from "./components/Game/Game";
 import LifeHUD from "./components/LifeHUD/LifeHUD";
 import Navbar from "./components/Navbar/Navbar";
 
@@ -8,8 +7,7 @@ function App() {
     <>
       <Navbar />
       <div className="container">
-        <AnimeCover />
-        <GuessInput />
+        <Game />
         <LifeHUD />
       </div>
     </>
