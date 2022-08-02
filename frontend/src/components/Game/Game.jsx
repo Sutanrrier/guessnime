@@ -16,13 +16,17 @@ function Game() {
   const [guess, setGuess] = useState(""); //Armazena o guess do usuário
   const [covers, setCovers] = useState([]); //Armazena os possiveis animes dado um input do usuário
   const [life, setLife] = useState(5); //Armazena a vida atual do usuário
+  const [imageLevel, setImageLevel] = useState(""); //Armazena o estado atual da capa do anime
 
   //Faz o GET do AnimeCover do banco e armazena ele no Reducer animeCover
   useEffect(() => {
-    const url_api = "http://localhost:8080/anime-covers/1";
-    fetch(url_api)
+    const urlApi = "http://localhost:8080/anime-covers/1";
+    fetch(urlApi)
       .then((response) => response.json())
-      .then((data) => dispatch(activeAnime(data)));
+      .then((data) => {
+        dispatch(activeAnime(data));
+        setImageLevel(data.url0);
+      });
   }, []);
 
   //Compara o guess do usuário com a resposta
@@ -37,6 +41,25 @@ function Game() {
       }
     }
   };
+
+  //Lida com as mudanças do nivel da imagem
+  useEffect(() => {
+    if (life == 4) {
+      setImageLevel(cover.url1);
+    }
+    if (life == 3) {
+      setImageLevel(cover.url2);
+    }
+    if (life == 2) {
+      setImageLevel(cover.url3);
+    }
+    if (life == 1) {
+      setImageLevel(cover.url4);
+    }
+    if (life == 0) {
+      setImageLevel(cover.urlCover);
+    }
+  }, [life]);
 
   //Lida com as mudanças no formulário
   function handleChangeFormInput(event) {
@@ -59,7 +82,7 @@ function Game() {
   return (
     <>
       <div className="guessanime-anime-container">
-        <AnimeCover image={cover.url0} />
+        <AnimeCover image={imageLevel} />
       </div>
 
       <div className="guessanime-guess-container">
