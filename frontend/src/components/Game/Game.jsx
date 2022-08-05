@@ -7,12 +7,14 @@ import { activeAnime } from "../../slices/animeCoverSlice";
 
 import AnimeCover from "../AnimeCover/AnimeCover";
 import Heart from "../Heart/Heart";
+import WrongItem from "../WrongItem/WrongItem";
 
 function Game() {
   const { register, handleSubmit, setValue } = useForm(); //Manipula o formulario
   const cover = useSelector((state) => state.animeCover); //Pega as informações do state atual do Anime Cover
   const dispatch = useDispatch(); //Permite fazer alterações no state do anime Cover
 
+  const [wrongGuesses, setWrongGuesses] = useState(["", "", "", "", ""]); //Armazena os guesses errados do usuário
   const [guess, setGuess] = useState(""); //Armazena o guess do usuário
   const [covers, setCovers] = useState([]); //Armazena os possiveis animes dado um input do usuário
   const [life, setLife] = useState(5); //Armazena a vida atual do usuário
@@ -38,12 +40,14 @@ function Game() {
     } else {
       if (life > 0) {
         setLife(life - 1);
+        setWrongGuesses(...[wrongGuesses], (wrongGuesses[life - 1] = guess));
       }
     }
   };
 
   //Lida com as mudanças do nivel da imagem
   useEffect(() => {
+    console.log(wrongGuesses);
     if (life == 4) {
       setImageLevel(cover.url1);
     }
@@ -82,7 +86,10 @@ function Game() {
   return (
     <>
       <div className="guessanime-anime-container">
-        <AnimeCover image={imageLevel} />
+        <AnimeCover
+          image={imageLevel}
+          guessType={life > 0 ? "cover-guess" : "cover-wrong"}
+        />
       </div>
 
       <div className="guessanime-guess-container">
@@ -137,6 +144,31 @@ function Game() {
         <div className="guessnime-life-text">
           <p> {life} lifes remaining</p>
         </div>
+      </div>
+
+      <div className="guessnime-wrong-guesses-container">
+        <ul className="guessnime-wrong-list">
+          <WrongItem
+            name={wrongGuesses[4]}
+            isActive={life <= 4 ? "li-visible" : "li-not-visible"}
+          />
+          <WrongItem
+            name={wrongGuesses[3]}
+            isActive={life <= 3 ? "li-visible" : "li-not-visible"}
+          />
+          <WrongItem
+            name={wrongGuesses[2]}
+            isActive={life <= 2 ? "li-visible" : "li-not-visible"}
+          />
+          <WrongItem
+            name={wrongGuesses[1]}
+            isActive={life <= 1 ? "li-visible" : "li-not-visible"}
+          />
+          <WrongItem
+            name={wrongGuesses[0]}
+            isActive={life === 0 ? "li-visible" : "li-not-visible"}
+          />
+        </ul>
       </div>
     </>
   );

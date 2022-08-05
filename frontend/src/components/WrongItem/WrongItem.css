@@ -1,0 +1,19 @@
+.guessnime-wrong-item {
+    background-color: #ff5349;
+    width: 25rem;
+    margin: 0 auto;
+    border: 0.1rem solid black;
+    border-radius: 0.1rem;
+    padding: 0.3rem;
+    font-weight: bold;
+}
+
+.li-visible {
+    display: flex;
+    justify-content: center;
+
+}
+
+.li-not-visible {
+    display: none;
+}
