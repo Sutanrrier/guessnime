@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { activeAnime } from "../../slices/animeCoverSlice";
+import { addScore, setMaxScore, resetScore } from "../../slices/userSlice";
 
 import AnimeCover from "../AnimeCover/AnimeCover";
 import Heart from "../Heart/Heart";
@@ -12,6 +13,7 @@ import WrongItem from "../WrongItem/WrongItem";
 function Game() {
   const { register, handleSubmit, setValue } = useForm(); //Manipula o formulario
   const cover = useSelector((state) => state.animeCover); //Pega as informações do state atual do Anime Cover
+  const user = useSelector((state) => state.user); //Pega as informações do state atual do User
   const dispatch = useDispatch(); //Permite fazer alterações no state do anime Cover
 
   const [wrongGuesses, setWrongGuesses] = useState(["", "", "", "", ""]); //Armazena os guesses errados do usuário
@@ -31,23 +33,8 @@ function Game() {
       });
   }, []);
 
-  //Compara o guess do usuário com a resposta
-  const onSubmit = (data) => {
-    const guess = data.guess;
-
-    if (guess === cover.title) {
-      alert("Acertou!");
-    } else {
-      if (life > 0) {
-        setLife(life - 1);
-        setWrongGuesses(...[wrongGuesses], (wrongGuesses[life - 1] = guess));
-      }
-    }
-  };
-
   //Lida com as mudanças do nivel da imagem
   useEffect(() => {
-    console.log(wrongGuesses);
     if (life == 4) {
       setImageLevel(cover.url1);
     }
@@ -62,8 +49,26 @@ function Game() {
     }
     if (life == 0) {
       setImageLevel(cover.urlCover);
+      alert("Você perdeu!");
+      dispatch(setMaxScore());
+      dispatch(resetScore());
     }
   }, [life]);
+
+  //Compara o guess do usuário com a resposta
+  const onSubmit = (data) => {
+    const guess = data.guess;
+
+    if (guess === cover.title) {
+      alert("Acertou!");
+      dispatch(addScore());
+    } else {
+      if (life > 0) {
+        setLife(life - 1);
+        setWrongGuesses(...[wrongGuesses], (wrongGuesses[life - 1] = guess));
+      }
+    }
+  };
 
   //Lida com as mudanças no formulário
   function handleChangeFormInput(event) {
@@ -85,6 +90,11 @@ function Game() {
 
   return (
     <>
+      <div className="guessnime-score-hud">
+        <p>SCORE: {user.score}</p>
+        <p>MAX SCORE: {user.maxScore}</p>
+      </div>
+
       <div className="guessanime-anime-container">
         <AnimeCover
           image={imageLevel}
