@@ -2,9 +2,9 @@
     background-color: #ff5349;
     width: 25rem;
     margin: 0 auto;
-    border: 0.1rem solid black;
+    border: 0.1rem solid #fff;
     border-radius: 0.1rem;
-    padding: 0.3rem;
+    padding: 0.1rem;
     font-weight: bold;
 }
 

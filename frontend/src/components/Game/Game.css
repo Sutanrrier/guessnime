@@ -18,18 +18,20 @@
 .guessnime-anime-list {
     padding: 0;
     background-color: #555;
-    margin: 1rem auto 0.2rem auto;
-    width: 25rem;
-    overflow: scroll;
-    overflow-x: hidden;
+    margin: 1rem auto 0.6rem auto;
     position: relative;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 6rem;
+    width: 25rem;
 }
 
 .guessnime-anime-list-item {
-    padding: 0.4rem;
+    padding: 0.15rem;
     margin: auto;
     text-align: center;
     font-weight: bold;
+    font-size: 0.8rem;
 }
 
 .guessnime-anime-list-item:hover {
