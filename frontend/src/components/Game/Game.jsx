@@ -107,8 +107,12 @@ function Game() {
   return (
     <>
       <div className="guessnime-score-hud">
-        <p>SCORE: {user.score}</p>
-        <p>MAX SCORE: {user.maxScore}</p>
+        <p>
+          <span className="guessnime-score"> SCORE: {user.score}</span>
+          <span className="guessnime-maxscore">
+            BEST SCORE: {user.maxScore}
+          </span>
+        </p>
       </div>
 
       <div className="guessanime-anime-container">
