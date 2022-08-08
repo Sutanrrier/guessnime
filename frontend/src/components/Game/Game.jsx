@@ -3,8 +3,10 @@ import "./Game.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+
 import { activeAnime } from "../../slices/animeCoverSlice";
 import { addScore, setMaxScore, resetScore } from "../../slices/userSlice";
+import { makeCoverList } from "../../slices/coverListSlice";
 
 import AnimeCover from "../AnimeCover/AnimeCover";
 import Heart from "../Heart/Heart";
@@ -12,8 +14,11 @@ import WrongItem from "../WrongItem/WrongItem";
 
 function Game() {
   const { register, handleSubmit, setValue } = useForm(); //Manipula o formulario
+
   const cover = useSelector((state) => state.animeCover); //Pega as informações do state atual do Anime Cover
   const user = useSelector((state) => state.user); //Pega as informações do state atual do User
+  const coverList = useSelector((state) => state.coverList.covers); //Pega as informações do state atual de Cover List
+
   const dispatch = useDispatch(); //Permite fazer alterações no state do anime Cover
 
   const [wrongGuesses, setWrongGuesses] = useState(["", "", "", "", ""]); //Armazena os guesses errados do usuário
@@ -22,7 +27,17 @@ function Game() {
   const [life, setLife] = useState(5); //Armazena a vida atual do usuário
   const [imageLevel, setImageLevel] = useState(""); //Armazena o estado atual da capa do anime
 
-  //Faz o GET do AnimeCover do banco e armazena ele no Reducer animeCover
+  //Faz o GET de todos os AnimeCover do banco e armazena ele em um Reducer
+  useEffect(() => {
+    const urlApi = "http://localhost:8080/anime-covers";
+    fetch(urlApi)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(makeCoverList(data));
+      });
+  }, []);
+
+  //Faz o GET do AnimeCover do banco e armazena ele em um Reducer
   useEffect(() => {
     const urlApi = "http://localhost:8080/anime-covers/1";
     fetch(urlApi)
@@ -59,14 +74,15 @@ function Game() {
   const onSubmit = (data) => {
     const guess = data.guess;
 
-    if (guess === cover.title) {
+    //Checa se o guess é de anime que existe na coverList ou não. (Existe-> >=0 | Não existe-> -1)
+    const index = coverList.findIndex((val) => val.title == guess);
+
+    if (life > 0 && index >= 0 && guess == cover.title) {
       alert("Acertou!");
       dispatch(addScore());
-    } else {
-      if (life > 0) {
-        setLife(life - 1);
-        setWrongGuesses(...[wrongGuesses], (wrongGuesses[life - 1] = guess));
-      }
+    } else if (life > 0 && index >= 0) {
+      setLife(life - 1);
+      setWrongGuesses(...[wrongGuesses], (wrongGuesses[life - 1] = guess));
     }
   };
 
@@ -133,7 +149,9 @@ function Game() {
             value={guess}
             {...register("guess")}
             onChange={handleChangeFormInput}
+            autoComplete="off"
           />
+
           <button
             type="submit"
             className="btn btn-primary guessanime-guess-button"
