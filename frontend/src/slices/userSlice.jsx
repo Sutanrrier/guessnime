@@ -9,9 +9,10 @@ export const userSlice = createSlice({
   reducers: {
     addScore: (state) => {
       state.score += 1;
-    },
-    setMaxScore: (state) => {
-      state.maxScore = state.score;
+
+      state.score > state.maxScore
+        ? (state.maxScore = state.score)
+        : state.maxScore;
     },
     resetScore: (state) => {
       state.score = 0;
@@ -19,6 +20,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { addScore, setMaxScore, resetScore } = userSlice.actions;
+export const { addScore, resetScore } = userSlice.actions;
 
 export default userSlice.reducer;

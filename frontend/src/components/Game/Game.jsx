@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import { activeAnime } from "../../slices/animeCoverSlice";
-import { addScore, setMaxScore, resetScore } from "../../slices/userSlice";
+import { addScore, resetScore } from "../../slices/userSlice";
 import { makeCoverList } from "../../slices/coverListSlice";
 
 import AnimeCover from "../AnimeCover/AnimeCover";
@@ -68,7 +68,6 @@ function Game() {
     if (life == 0) {
       setIsGameRunning(false);
       setImageLevel(cover.urlCover);
-      dispatch(setMaxScore());
       dispatch(resetScore());
     }
   }, [life]);
