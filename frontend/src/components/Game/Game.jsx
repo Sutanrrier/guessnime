@@ -29,7 +29,7 @@ function Game() {
   const [covers, setCovers] = useState([]); //Armazena os possiveis animes dado um input do usuário
   const [life, setLife] = useState(5); //Armazena a vida atual do usuário
   const [imageLevel, setImageLevel] = useState(""); //Armazena o estado atual da capa do anime
-  const [isGameRunning, setIsGameRunning] = useState(true); //Armazena se a rodada está ativa.
+  const [isGameRunning, setIsGameRunning] = useState(false); //Armazena se a rodada está ativa.
   const [roundWin, setRoundWin] = useState(false); //Armazena se o usuario venceu a rodada
 
   //Faz o GET de todos os AnimeCover do banco e armazena ele em um Reducer
@@ -42,17 +42,11 @@ function Game() {
       });
   }, []);
 
-  //Faz o GET do AnimeCover do banco e armazena ele em um Reducer
+  //Faz o GET do primeiro AnimeCover do banco e armazena ele em um Reducer
   useEffect(() => {
-    const random = Math.floor(Math.random() * NUM_COVERS) + 1;
-    const urlApi = `${BASE_URL}/anime-covers/${random}`;
-
-    fetch(urlApi)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(activeAnime(data));
-        setImageLevel(data.url0);
-      });
+    if (!isGameRunning) {
+      handleNewRound();
+    }
   }, []);
 
   //Lida com as mudanças do nivel da imagem
@@ -113,7 +107,7 @@ function Game() {
   }
 
   //Lida com o botão de gerar nova rodada
-  function handleNewRoundButtonClick() {
+  function handleNewRound() {
     const random = Math.floor(Math.random() * NUM_COVERS) + 1;
     const urlApi = `${BASE_URL}/anime-covers/${random}`;
 
@@ -245,7 +239,7 @@ function Game() {
         />
         <button
           className="btn btn-primary guessanime-guess-button"
-          onClick={handleNewRoundButtonClick}
+          onClick={handleNewRound}
         >
           {roundWin ? "Continue" : "Reset"}
         </button>

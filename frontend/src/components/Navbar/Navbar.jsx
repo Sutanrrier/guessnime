@@ -1,19 +1,22 @@
 import "./Navbar.css";
 import { FaInfoCircle, FaQuestionCircle } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
     <nav className="navbar bg-dark">
       <div className="container-fluid">
-        <a className="guessnime-navbar-title navbar-brand">GUESSNIME</a>
+        <NavLink className="guessnime-navbar-title navbar-brand" to="/">
+          GUESSNIME
+        </NavLink>
 
         <div className="d-flex">
-          <a className="guessnime-nav-link" href="#" title="How to play">
+          <NavLink className="guessnime-nav-link" to="/howtoplay">
             <FaQuestionCircle />
-          </a>
-          <a className="guessnime-nav-link" href="#" title="Credits">
+          </NavLink>
+          <NavLink className="guessnime-nav-link" to="/credits">
             <FaInfoCircle />
-          </a>
+          </NavLink>
         </div>
       </div>
     </nav>
