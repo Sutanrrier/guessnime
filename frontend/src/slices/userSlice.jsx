@@ -8,10 +8,6 @@ export const userSlice = createSlice({
       window.localStorage.getItem("ga-bestScore") != null
         ? window.localStorage.getItem("ga-bestScore")
         : "0",
-    timesPlayed:
-      window.localStorage.getItem("ga-timesPlayed") != null
-        ? window.localStorage.getItem("ga-timesPlayed")
-        : "0",
   },
   reducers: {
     addScore: (state) => {

@@ -1,10 +1,20 @@
 .guessnime-navbar-title {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: bold;
     letter-spacing: 0.1rem;
-    margin: auto;
+    color: #fff;
+    margin: 0 0.5rem;
+}
+
+.guessnime-navbar-title:hover {
+    color: #fff;
 }
 
 .navbar-brand {
     padding: 0;
+}
+
+.guessnime-nav-link {
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
 }
