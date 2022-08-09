@@ -6,12 +6,8 @@
     border-radius: 0.1rem;
     padding: 0.1rem;
     font-weight: bold;
-}
-
-.li-visible {
     display: flex;
     justify-content: center;
-
 }
 
 .li-not-visible {

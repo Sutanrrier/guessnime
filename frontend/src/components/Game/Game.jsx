@@ -11,6 +11,7 @@ import { makeCoverList } from "../../slices/coverListSlice";
 import AnimeCover from "../AnimeCover/AnimeCover";
 import Heart from "../Heart/Heart";
 import WrongItem from "../WrongItem/WrongItem";
+import GuessCard from "../GuessCard/GuessCard";
 
 function Game() {
   const { register, handleSubmit, setValue } = useForm(); //Manipula o formulario
@@ -26,6 +27,8 @@ function Game() {
   const [covers, setCovers] = useState([]); //Armazena os possiveis animes dado um input do usuário
   const [life, setLife] = useState(5); //Armazena a vida atual do usuário
   const [imageLevel, setImageLevel] = useState(""); //Armazena o estado atual da capa do anime
+  const [isGameRunning, setIsGameRunning] = useState(true);
+  const [roundWin, setRoundWin] = useState(false);
 
   //Faz o GET de todos os AnimeCover do banco e armazena ele em um Reducer
   useEffect(() => {
@@ -39,7 +42,7 @@ function Game() {
 
   //Faz o GET do AnimeCover do banco e armazena ele em um Reducer
   useEffect(() => {
-    const urlApi = "http://localhost:8080/anime-covers/1";
+    const urlApi = "http://localhost:8080/anime-covers/3";
     fetch(urlApi)
       .then((response) => response.json())
       .then((data) => {
@@ -63,8 +66,8 @@ function Game() {
       setImageLevel(cover.url4);
     }
     if (life == 0) {
+      setIsGameRunning(false);
       setImageLevel(cover.urlCover);
-      alert("Você perdeu!");
       dispatch(setMaxScore());
       dispatch(resetScore());
     }
@@ -77,10 +80,12 @@ function Game() {
     //Checa se o guess é de anime que existe na coverList ou não. (Existe-> >=0 | Não existe-> -1)
     const index = coverList.findIndex((val) => val.title == guess);
 
-    if (life > 0 && index >= 0 && guess == cover.title) {
-      alert("Acertou!");
+    if (life > 0 && index >= 0 && guess == cover.title && isGameRunning) {
       dispatch(addScore());
-    } else if (life > 0 && index >= 0) {
+      setIsGameRunning(false);
+      setRoundWin(true);
+      setImageLevel(cover.urlCover);
+    } else if (life > 0 && index >= 0 && isGameRunning) {
       setLife(life - 1);
       setWrongGuesses(...[wrongGuesses], (wrongGuesses[life - 1] = guess));
     }
@@ -91,7 +96,7 @@ function Game() {
     const actualGuess = event.target.value;
     setGuess(actualGuess);
 
-    if (actualGuess.length > 3) {
+    if (actualGuess.length > 2) {
       const url = `http://localhost:8080/anime-covers/guess?title=${guess}`;
 
       fetch(url)
@@ -142,6 +147,7 @@ function Game() {
           })}
         </ul>
         <form
+          style={!isGameRunning ? { display: "none" } : null}
           className="guessnime-guess-form"
           onSubmit={handleSubmit(onSubmit)}
         >
@@ -178,30 +184,36 @@ function Game() {
         </div>
       </div>
 
-      <div className="guessnime-wrong-guesses-container">
+      <div
+        className="guessnime-wrong-guesses-container"
+        style={!isGameRunning ? { display: "none" } : null}
+      >
         <ul className="guessnime-wrong-list">
           <WrongItem
             name={wrongGuesses[4]}
-            isActive={life <= 4 ? "li-visible" : "li-not-visible"}
+            isActive={life > 4 ? "li-not-visible" : ""}
           />
           <WrongItem
             name={wrongGuesses[3]}
-            isActive={life <= 3 ? "li-visible" : "li-not-visible"}
+            isActive={life > 3 ? "li-not-visible" : ""}
           />
           <WrongItem
             name={wrongGuesses[2]}
-            isActive={life <= 2 ? "li-visible" : "li-not-visible"}
+            isActive={life > 2 ? "li-not-visible" : ""}
           />
           <WrongItem
             name={wrongGuesses[1]}
-            isActive={life <= 1 ? "li-visible" : "li-not-visible"}
-          />
-          <WrongItem
-            name={wrongGuesses[0]}
-            isActive={life === 0 ? "li-visible" : "li-not-visible"}
+            isActive={life > 1 ? "li-not-visible" : ""}
           />
         </ul>
       </div>
+
+      <GuessCard
+        isActive={isGameRunning ? "card-not-visible" : ""}
+        guessResult={life == 0 ? "Failed!" : "Win"}
+        coverTitle={cover.title}
+        buttonType={roundWin ? "Continue" : "Reset"}
+      />
     </>
   );
 }
