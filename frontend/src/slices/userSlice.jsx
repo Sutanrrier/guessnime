@@ -4,15 +4,23 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     score: 0,
-    maxScore: 0,
+    maxScore:
+      window.localStorage.getItem("ga-bestScore") != null
+        ? window.localStorage.getItem("ga-bestScore")
+        : "0",
+    timesPlayed:
+      window.localStorage.getItem("ga-timesPlayed") != null
+        ? window.localStorage.getItem("ga-timesPlayed")
+        : "0",
   },
   reducers: {
     addScore: (state) => {
       state.score += 1;
 
-      state.score > state.maxScore
-        ? (state.maxScore = state.score)
-        : state.maxScore;
+      if (state.score > state.maxScore) {
+        state.maxScore = state.score;
+        window.localStorage.setItem("ga-bestScore", state.maxScore);
+      }
     },
     resetScore: (state) => {
       state.score = 0;

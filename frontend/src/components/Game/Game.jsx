@@ -71,8 +71,8 @@ function Game() {
     }
     if (life == 0) {
       setIsGameRunning(false);
+      setRoundWin(false);
       setImageLevel(cover.urlCover);
-      dispatch(resetScore());
     }
   }, [life]);
 
@@ -99,7 +99,7 @@ function Game() {
     const actualGuess = event.target.value;
     setGuess(actualGuess);
 
-    if (actualGuess.length > 2) {
+    if (actualGuess.length > 1) {
       const url = `${BASE_URL}/anime-covers/guess?title=${guess}`;
 
       fetch(url)
@@ -110,6 +110,29 @@ function Game() {
     } else {
       setCovers([]);
     }
+  }
+
+  //Lida com o botão de gerar nova rodada
+  function handleNewRoundButtonClick() {
+    const random = Math.floor(Math.random() * NUM_COVERS) + 1;
+    const urlApi = `${BASE_URL}/anime-covers/${random}`;
+
+    fetch(urlApi)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(activeAnime(data));
+        setImageLevel(data.url0);
+        setLife(5);
+        setWrongGuesses(["", "", "", "", ""]);
+        setGuess("");
+        setCovers([]);
+        setIsGameRunning(true);
+
+        //Reseta o score caso a rodada não tenha sido ganha
+        if (!roundWin) {
+          dispatch(resetScore());
+        }
+      });
   }
 
   return (
@@ -211,12 +234,22 @@ function Game() {
         </ul>
       </div>
 
-      <GuessCard
-        isActive={isGameRunning ? "card-not-visible" : ""}
-        guessResult={life == 0 ? "Failed!" : "Win"}
-        coverTitle={cover.title}
-        buttonType={roundWin ? "Continue" : "Reset"}
-      />
+      <div
+        className="guessnime-info-card"
+        style={isGameRunning ? { display: "none" } : null}
+      >
+        <GuessCard
+          isActive={isGameRunning ? "card-not-visible" : ""}
+          guessResult={life == 0 ? "Failed!" : "Win"}
+          coverTitle={cover.title}
+        />
+        <button
+          className="btn btn-primary guessanime-guess-button"
+          onClick={handleNewRoundButtonClick}
+        >
+          {roundWin ? "Continue" : "Reset"}
+        </button>
+      </div>
     </>
   );
 }
