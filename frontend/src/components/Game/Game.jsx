@@ -14,25 +14,27 @@ import WrongItem from "../WrongItem/WrongItem";
 import GuessCard from "../GuessCard/GuessCard";
 
 function Game() {
-  const { register, handleSubmit, setValue } = useForm(); //Manipula o formulario
+  const BASE_URL = "http://localhost:8080"; //URL Base de acesso a API.
+  const NUM_COVERS = 3; //Quantidade total de animes na API
 
   const cover = useSelector((state) => state.animeCover); //Pega as informações do state atual do Anime Cover
   const user = useSelector((state) => state.user); //Pega as informações do state atual do User
   const coverList = useSelector((state) => state.coverList.covers); //Pega as informações do state atual de Cover List
 
   const dispatch = useDispatch(); //Permite fazer alterações no state do anime Cover
+  const { register, handleSubmit, setValue } = useForm(); //Manipula o formulario
 
   const [wrongGuesses, setWrongGuesses] = useState(["", "", "", "", ""]); //Armazena os guesses errados do usuário
   const [guess, setGuess] = useState(""); //Armazena o guess do usuário
   const [covers, setCovers] = useState([]); //Armazena os possiveis animes dado um input do usuário
   const [life, setLife] = useState(5); //Armazena a vida atual do usuário
   const [imageLevel, setImageLevel] = useState(""); //Armazena o estado atual da capa do anime
-  const [isGameRunning, setIsGameRunning] = useState(true);
-  const [roundWin, setRoundWin] = useState(false);
+  const [isGameRunning, setIsGameRunning] = useState(true); //Armazena se a rodada está ativa.
+  const [roundWin, setRoundWin] = useState(false); //Armazena se o usuario venceu a rodada
 
   //Faz o GET de todos os AnimeCover do banco e armazena ele em um Reducer
   useEffect(() => {
-    const urlApi = "http://localhost:8080/anime-covers";
+    const urlApi = `${BASE_URL}/anime-covers`;
     fetch(urlApi)
       .then((response) => response.json())
       .then((data) => {
@@ -42,7 +44,9 @@ function Game() {
 
   //Faz o GET do AnimeCover do banco e armazena ele em um Reducer
   useEffect(() => {
-    const urlApi = "http://localhost:8080/anime-covers/3";
+    const random = Math.floor(Math.random() * NUM_COVERS) + 1;
+    const urlApi = `${BASE_URL}/anime-covers/${random}`;
+
     fetch(urlApi)
       .then((response) => response.json())
       .then((data) => {
@@ -96,7 +100,7 @@ function Game() {
     setGuess(actualGuess);
 
     if (actualGuess.length > 2) {
-      const url = `http://localhost:8080/anime-covers/guess?title=${guess}`;
+      const url = `${BASE_URL}/anime-covers/guess?title=${guess}`;
 
       fetch(url)
         .then((response) => response.json())
