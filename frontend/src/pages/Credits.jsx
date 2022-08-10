@@ -1,4 +1,4 @@
-import "./Credits.css";
+import "./Pages.css";
 
 import logo from "../assets/credit-logo.png";
 
@@ -13,7 +13,12 @@ function Credits() {
         <h1 className="guessnime-credits-title">Hello!</h1>
         <p className="guessnime-credits-text">
           Guessnime is a game for anime fans created by me,
-          <span className="guessnime-credits-author">Sutanrrier!</span>
+          <a
+            href="https://twitter.com/Sutanrrier"
+            className="guessnime-credits-link"
+          >
+            Sutanrrier
+          </a>
         </p>
         <p className="guessnime-credits-text">
           Inspired by
