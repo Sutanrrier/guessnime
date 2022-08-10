@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto&display=swap');
+
+.guessnime-credits-card {
+    margin: 2rem auto;
+
+}
+
+.guessnime-credits-logo {
+    width: 12rem;
+    filter: drop-shadow(0px 0px 2rem #A020F0);
+    margin: 2rem auto;
+}
+
+.guessnime-credits-title {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 4rem;
+}
+
+.guessnime-credits-text {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    font-size: 1.4rem;
+    font-family: 'Roboto', sans-serif;
+    margin: 1.2rem auto;
+}
+
+.guessnime-credits-link,
+.guessnime-credits-link:visited {
+    display: flex;
+    color: #A020F0;
+    margin: 0 0.4rem;
+
+}
+
+.guessnime-credits-link:hover {
+    color: #d9c4ec;
+}
+
+.guessnime-credits-author {
+    font-weight: bold;
+    color: #d9c4ec;
+    margin: 0 0.2rem;
+}

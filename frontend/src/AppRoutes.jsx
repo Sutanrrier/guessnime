@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar/Navbar";
 
-import App from "../pages/App";
-import Credits from "../pages/Credits";
-import HowToPlay from "../pages/HowToPlay";
+import App from "./pages/App";
+import Credits from "./pages/Credits";
+import HowToPlay from "./pages/HowToPlay";
 
 function AppRoutes() {
   return (

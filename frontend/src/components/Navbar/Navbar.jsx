@@ -11,10 +11,14 @@ function Navbar() {
         </NavLink>
 
         <div className="d-flex">
-          <NavLink className="guessnime-nav-link" to="/howtoplay">
+          <NavLink
+            className="guessnime-nav-link"
+            to="/howtoplay"
+            title="How to Play"
+          >
             <FaQuestionCircle />
           </NavLink>
-          <NavLink className="guessnime-nav-link" to="/credits">
+          <NavLink className="guessnime-nav-link" to="/credits" title="Credits">
             <FaInfoCircle />
           </NavLink>
         </div>
