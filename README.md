@@ -1,6 +1,6 @@
-# guessnime
-A Guessing Game about anime covers.
+# GUESSNIME
+Guessnime is a game for anime fans created by me, Sutanrrier.  
 
-Inspired by Gamedle.
+Inspired by Gamedle and Framed.  
 
-More details in future.
+All rights go to the rightful owners - no copyright infringement intended.  
