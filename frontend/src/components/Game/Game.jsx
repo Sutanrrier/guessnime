@@ -12,10 +12,12 @@ import AnimeCover from "../AnimeCover/AnimeCover";
 import Heart from "../Heart/Heart";
 import WrongItem from "../WrongItem/WrongItem";
 import GuessCard from "../GuessCard/GuessCard";
+import { toast } from "react-toastify";
 
 function Game() {
   const BASE_URL = "http://localhost:8080"; //URL Base de acesso a API.
-  const NUM_COVERS = 3; //Quantidade total de animes na API
+  const NUM_COVERS = 10; //Quantidade total de animes na API
+  const PLAYER_LIFE = 5; //Quantidade de vidas do jogador
 
   const cover = useSelector((state) => state.animeCover); //Pega as informações do state atual do Anime Cover
   const user = useSelector((state) => state.user); //Pega as informações do state atual do User
@@ -27,43 +29,42 @@ function Game() {
   const [wrongGuesses, setWrongGuesses] = useState(["", "", "", "", ""]); //Armazena os guesses errados do usuário
   const [guess, setGuess] = useState(""); //Armazena o guess do usuário
   const [covers, setCovers] = useState([]); //Armazena os possiveis animes dado um input do usuário
-  const [life, setLife] = useState(5); //Armazena a vida atual do usuário
+  const [life, setLife] = useState(PLAYER_LIFE); //Armazena a vida atual do usuário
   const [imageLevel, setImageLevel] = useState(""); //Armazena o estado atual da capa do anime
   const [isGameRunning, setIsGameRunning] = useState(false); //Armazena se a rodada está ativa.
   const [roundWin, setRoundWin] = useState(false); //Armazena se o usuario venceu a rodada
+  const [coversPlayed, setCoversPlayed] = useState([]); //Armazena ids de animes já jogados nesta partida.
 
-  //Faz o GET de todos os AnimeCover do banco e armazena ele em um Reducer
+  //Faz GET de todos os AnimeCover do banco, guarda em um Reducer e inicia uma nova rodada
   useEffect(() => {
     const urlApi = `${BASE_URL}/anime-covers`;
+
     fetch(urlApi)
       .then((response) => response.json())
       .then((data) => {
         dispatch(makeCoverList(data));
-      });
-  }, []);
 
-  //Faz o GET do primeiro AnimeCover do banco e armazena ele em um Reducer
-  useEffect(() => {
-    if (!isGameRunning) {
-      handleNewRound();
-    }
+        if (!isGameRunning) {
+          handleNewRound();
+        }
+      });
   }, []);
 
   //Lida com as mudanças do nivel da imagem
   useEffect(() => {
-    if (life == 4) {
+    if (life === 4) {
       setImageLevel(cover.url1);
     }
-    if (life == 3) {
+    if (life === 3) {
       setImageLevel(cover.url2);
     }
-    if (life == 2) {
+    if (life === 2) {
       setImageLevel(cover.url3);
     }
-    if (life == 1) {
+    if (life === 1) {
       setImageLevel(cover.url4);
     }
-    if (life == 0) {
+    if (life === 0) {
       setIsGameRunning(false);
       setRoundWin(false);
       setImageLevel(cover.urlCover);
@@ -81,9 +82,12 @@ function Game() {
       dispatch(addScore());
       setIsGameRunning(false);
       setRoundWin(true);
+      setGuess("");
       setImageLevel(cover.urlCover);
     } else if (life > 0 && index >= 0 && isGameRunning) {
       setLife(life - 1);
+      setGuess("");
+      setValue("guess", "");
       setWrongGuesses(...[wrongGuesses], (wrongGuesses[life - 1] = guess));
     }
   };
@@ -94,13 +98,11 @@ function Game() {
     setGuess(actualGuess);
 
     if (actualGuess.length > 1) {
-      const url = `${BASE_URL}/anime-covers/guess?title=${guess}`;
+      const animeOptions = coverList.filter((item) =>
+        item.title.toLowerCase().includes(actualGuess.toLowerCase())
+      );
 
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          setCovers(data);
-        });
+      setCovers(animeOptions);
     } else {
       setCovers([]);
     }
@@ -108,25 +110,33 @@ function Game() {
 
   //Lida com o botão de gerar nova rodada
   function handleNewRound() {
-    const random = Math.floor(Math.random() * NUM_COVERS) + 1;
-    const urlApi = `${BASE_URL}/anime-covers/${random}`;
+    const idAnime = Math.floor(Math.random() * NUM_COVERS) + 1;
 
-    fetch(urlApi)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(activeAnime(data));
-        setImageLevel(data.url0);
-        setLife(5);
-        setWrongGuesses(["", "", "", "", ""]);
-        setGuess("");
-        setCovers([]);
-        setIsGameRunning(true);
+    if (!coversPlayed.includes(idAnime)) {
+      const urlApi = `${BASE_URL}/anime-covers/${idAnime}`;
 
-        //Reseta o score caso a rodada não tenha sido ganha
-        if (!roundWin) {
-          dispatch(resetScore());
-        }
-      });
+      fetch(urlApi)
+        .then((response) => response.json())
+        .then((data) => {
+          dispatch(activeAnime(data));
+          setImageLevel(data.url0);
+          setLife(PLAYER_LIFE);
+          setWrongGuesses(["", "", "", "", ""]);
+          setCovers([]);
+          setValue("guess", "");
+          setCoversPlayed(...[coversPlayed], coversPlayed.push(idAnime));
+          setIsGameRunning(true);
+
+          //Reseta o score caso a rodada não tenha sido ganha
+          if (!roundWin) {
+            dispatch(resetScore());
+          }
+        });
+    } else if (coversPlayed.length == NUM_COVERS) {
+      toast.success("You finished all current animes! Congratulations!");
+    } else {
+      handleNewRound();
+    }
   }
 
   return (
@@ -166,6 +176,7 @@ function Game() {
             );
           })}
         </ul>
+
         <form
           style={!isGameRunning ? { display: "none" } : null}
           className="guessnime-guess-form"

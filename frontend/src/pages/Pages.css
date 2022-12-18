@@ -59,6 +59,11 @@
     justify-content: center;
 }
 
+.guessnime-tutorial-version {
+    display: flex;
+    justify-content: right;
+}
+
 @media only screen and (min-width: 768px) {
     .guessnime-tutorial-image {
         width: 12rem !important;

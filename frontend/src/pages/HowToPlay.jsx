@@ -1,3 +1,5 @@
+import "./Pages.css";
+
 import tutorial1 from "../assets/tutorial/tutorial1.jpg";
 import tutorial2 from "../assets/tutorial/tutorial2.jpg";
 import tutorial3 from "../assets/tutorial/tutorial3.jpg";
@@ -42,6 +44,7 @@ function HowToPlay() {
           Each incorrect attempt will be marked in red indicating that you have
           not succeeded and a new portion of the image will be discovered.
         </p>
+        <p className="guessnime-tutorial-version">Actual Version: 1.0</p>
       </div>
     </div>
   );
