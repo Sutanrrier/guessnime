@@ -42,6 +42,7 @@ function Credits() {
           >
             Twitter
           </a>
+          !
         </p>
       </div>
     </div>
