@@ -247,7 +247,7 @@ function Game() {
         <GuessCard
           isActive={isGameRunning ? "card-not-visible" : ""}
           guessResult={life == 0 ? "Failed!" : "Win"}
-          coverTitle={cover.title}
+          coverTitle={!isGameRunning ? cover.title : ""}
         />
         <button
           className="btn btn-primary guessanime-guess-button"
