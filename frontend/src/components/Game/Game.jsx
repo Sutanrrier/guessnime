@@ -15,7 +15,7 @@ import GuessCard from "../GuessCard/GuessCard";
 import { toast } from "react-toastify";
 
 function Game() {
-  const BASE_URL = "http://localhost:8080"; //URL Base de acesso a API.
+  const BASE_URL = "https://guessnime.up.railway.app"; //URL Base de acesso a API.
   const NUM_COVERS = 10; //Quantidade total de animes na API
   const PLAYER_LIFE = 5; //Quantidade de vidas do jogador
 

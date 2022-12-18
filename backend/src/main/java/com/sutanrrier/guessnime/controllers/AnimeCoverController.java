@@ -32,7 +32,7 @@ public class AnimeCoverController {
 		return ResponseEntity.status(HttpStatus.OK).body(coverService.getAnimeCoverById(id));
 	}
 	
-	@PostMapping
+	@PostMapping(value = "/insert")
 	public ResponseEntity<AnimeCover> insertAnimeCover(@RequestBody AnimeCover animeCover){
 		return ResponseEntity.status(HttpStatus.CREATED).body(coverService.insertAnimeCover(animeCover));
 	}
