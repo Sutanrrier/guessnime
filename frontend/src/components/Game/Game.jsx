@@ -3,19 +3,20 @@ import "./Game.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { activeAnime } from "../../slices/animeCoverSlice";
 import { addScore, resetScore } from "../../slices/userSlice";
 import { makeCoverList } from "../../slices/coverListSlice";
 
+import { BASE_URL } from "../../utils/request";
+
 import AnimeCover from "../AnimeCover/AnimeCover";
 import Heart from "../Heart/Heart";
 import WrongItem from "../WrongItem/WrongItem";
 import GuessCard from "../GuessCard/GuessCard";
-import { toast } from "react-toastify";
 
 function Game() {
-  const BASE_URL = "https://guessnime.up.railway.app"; //URL Base de acesso a API.
   const NUM_COVERS = 10; //Quantidade total de animes na API
   const PLAYER_LIFE = 5; //Quantidade de vidas do jogador
 
