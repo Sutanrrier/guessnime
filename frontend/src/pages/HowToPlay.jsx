@@ -8,6 +8,9 @@ import tutorial4 from "../assets/tutorial/tutorial4.jpg";
 import { FaArrowCircleRight } from "react-icons/fa";
 
 function HowToPlay() {
+  const NUM_COVERS = "20";
+  const APP_VERSION = "1.0.1";
+
   return (
     <div className="container">
       <div className="guessnime-tutorial-card">
@@ -44,7 +47,10 @@ function HowToPlay() {
           Each incorrect attempt will be marked in red indicating that you have
           not succeeded and a new portion of the image will be discovered.
         </p>
-        <p className="guessnime-tutorial-version">Actual Version: 1.0</p>
+
+        <p className="guessnime-tutorial-version">
+          Actual Version: {APP_VERSION} | Current Total Animes: {NUM_COVERS}
+        </p>
       </div>
     </div>
   );

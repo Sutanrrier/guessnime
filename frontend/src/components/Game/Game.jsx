@@ -3,7 +3,9 @@ import "./Game.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 import { activeAnime } from "../../slices/animeCoverSlice";
 import { addScore, resetScore } from "../../slices/userSlice";
@@ -17,7 +19,7 @@ import WrongItem from "../WrongItem/WrongItem";
 import GuessCard from "../GuessCard/GuessCard";
 
 function Game() {
-  const NUM_COVERS = 10; //Quantidade total de animes na API
+  const NUM_COVERS = 20; //Quantidade total de animes na API
   const PLAYER_LIFE = 5; //Quantidade de vidas do jogador
 
   const cover = useSelector((state) => state.animeCover); //Pega as informações do state atual do Anime Cover
@@ -142,6 +144,7 @@ function Game() {
 
   return (
     <>
+      <ToastContainer />
       <div className="guessnime-score-hud">
         <p>
           <span className="guessnime-score"> SCORE: {user.score}</span>

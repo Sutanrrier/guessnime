@@ -6,13 +6,9 @@ import App from "./pages/App";
 import Credits from "./pages/Credits";
 import HowToPlay from "./pages/HowToPlay";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 function AppRoutes() {
   return (
     <BrowserRouter>
-      <ToastContainer />
       <Navbar />
 
       <Routes>
